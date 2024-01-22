@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-3 px-2 text-light">
+    <marquee class="bg-light text-dark" behavior="" direction="">warning! The website is working in test period. If you notice any bugs, please inform us</marquee>
+    <h4 class="text-center mt-1">Welcome</h4>
+    <div>
+     <!------------- Second Section --------
+     <div class="card text-center m-1">
+        <div class="card-header">
+          Classic Map
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Erangel, Livik and Krakin </h5>
+          <p class="card-text">Team up with your friends and win or get good position in the matches</p>
+          <a href="#" class="btn btn-primary">Participate</a>
+        </div>
+        <div class="card-footer text-body-secondary">
+            current match is streaming in youtube channel. wanna watch ?
+        </div>
+      </div>
+
+           
+     <div class="card text-center m-1">
+        <div class="card-header">
+          Arena Map
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Inventory(Arena,TDM)</h5>
+          <p class="card-text">if you are a good TDM player, this map is perfect for you</p>
+          <a href="#" class="btn btn-primary">Participate</a>
+        </div>
+        <div class="card-footer text-body-secondary">
+          2 days ago
+        </div>
+      </div>
+    ---------->   
+    </div>
+    
+    <hr>
+        <!------------- Third Section ------------------>
+     <div class="card text-center m-1 bg-warning">
+        <div class="card-header">
+          Tournaments
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Inventory (Arena)</h5>
+          <p class="card-text">It is a great chance to show yourself. </p>
+          {% if user.is_authenticated %}
+          <a href="{% url 'tourlist' %}" class="btn btn-primary fw-normal"> Participate </a>
+          {% else %}
+          <a href="{% url 'tourlist' %}" class="btn btn-primary disabled fw-normal"> Participate </a>
+          <p>Please sign up / Login to participate</p>
+          {% endif %}
+        </div>
+        <div class="card-footer text-body-secondary">
+            current match is streaming in youtube channel. wanna watch ? 
+        </div>
+      </div>
+
+    
+</div>
+{% endblock content %}
