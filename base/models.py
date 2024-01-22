@@ -43,12 +43,14 @@ class Tournament(models.Model):
 class Round(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     round_name = models.CharField(max_length=50)
+    tournament = models.ForeignKey(Tournament, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.round_name
 
 class Match(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     match_name = models.CharField(max_length=50)
     round_number = models.ForeignKey(Round, on_delete=models.CASCADE)
     player1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='player1')

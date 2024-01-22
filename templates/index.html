@@ -47,7 +47,7 @@
           <h5 class="card-title">Inventory (Arena)</h5>
           <p class="card-text">It is a great chance to show yourself. </p>
           {% if user.is_authenticated %}
-          <a href="{% url 'tourlist' %}" class="btn btn-primary fw-normal"> Participate </a>
+          <a href="{% url 'tourlist' %}" class="btn btn-primary fw-normal"> Participate -> </a>
           {% else %}
           <a href="{% url 'tourlist' %}" class="btn btn-primary disabled fw-normal"> Participate </a>
           <p>Please sign up / Login to participate</p>

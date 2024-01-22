@@ -4,5 +4,6 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('tournaments', views.tourlist, name='tourlist'),
+    path('fixtures', views.fixtures, name='fixtures'),
     path('<uuid:pk>/detail', views.PretourPage.as_view(),name='tour_detail'),
 ]
