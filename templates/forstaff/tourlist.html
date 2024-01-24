@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container py-3 px-2 text-light">
-<h3 class="text-center mt-1">All Ongoing, Finished and upcomingtournaments</h3>
+<h3 class="text-center mt-1">All Ongoing, Finished and upcoming tournaments</h3>
 <hr>    
 {% if tournaments %}
 <table class="table">
@@ -19,8 +19,8 @@
     <tr>
         <td>{{forloop.counter}}</td>
         <td>{{tournament.tournament_name}}</td>
-        <td>{{tournament.ended_date}}</td>
-        <th><button class="btn btn-success btn-sm" href="">Edit</button> | <button class="btn btn-primary btn-sm" href="">View</button></th>
+        <td>{{tournament.end_date}}</td>
+        <th><a class="btn btn-success btn-sm" href="{% url 'edittour' tournament.pk %}">Edit</a> | <button class="btn btn-primary btn-sm" href="">View</button></th>
     </tr>
     {% endfor %}
 </tbody>

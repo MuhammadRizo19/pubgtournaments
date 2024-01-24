@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -29,6 +30,12 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'account.apps.AccountConfig',
 ]
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",
+    "dark_mode_theme": "darkly",
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
