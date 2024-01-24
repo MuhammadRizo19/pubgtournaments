@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-3 px-2 text-light">
+<h3 class="text-center mt-1">All Ongoing, Finished and upcomingtournaments</h3>
+<hr>    
+{% if tournaments %}
+<table class="table">
+<thead>
+    <tr>
+        <th>#</th>
+        <th>Tournament</th>
+        <th>End date</th>
+        <th>Actions</th>
+    </tr>
+</thead>
+<tbody>
+    {% for tournament in tournaments %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{tournament.tournament_name}}</td>
+        <td>{{tournament.ended_date}}</td>
+        <th><button class="btn btn-success btn-sm" href="">Edit</button> | <button class="btn btn-primary btn-sm" href="">View</button></th>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% else %}
+<h4 class="text-center text-danger"> Unfortunately, Currently there is no any ongoing and upcoming tournaments.</h4>
+{% endif %}
+</div>
+{% endblock content %}

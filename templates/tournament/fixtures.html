@@ -1,15 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="container py-3 px-2 text-light">
 <h3 class="text-center mt-1">All Rounds</h3>
 <hr>
 
-<ul class="list-group">
-    {% for round in rounds %}
-<li class="list-group-item my-2 py-3 text-center"><a class="text-decoration-none text-dark" href="{% url 'round_detail' round.pk %}"> {{round.round_number}} </a></li>
-    {% endfor %}
-</ul>
-
+{% if rounds %}
+{% for round in rounds %}
+<table class="table table-fluid w-100">
+    <thead>
+        <tr>
+            <th class="text-center" colspan="3"> 
+               {{round.round_number}}
+            </th>
+            </tr>
+    </thead>
+    <tbody class="text-center">
+        {% for match in matches %}
+        <tr>
+               <td style="width: 33%;"><a class="text-decoration-none text-dark" href=""> {{match.player_1}} </a></td>
+               <td class="border" style="width: 33%;"><a href="" class="text-decoration-none text-dark"> {{match.total}} </a></td>
+               <td style="width: 33%;"> <a href="" class="text-decoration-none text-dark"> {{match.player_2}} </a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+{% else %}
+{% for message in messages %}
+<h3 class="text-center mt-1">{{message}}</h3>
+{% endfor %}
+{% endif %}
 </div>
 {% endblock content %}

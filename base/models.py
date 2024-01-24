@@ -45,6 +45,10 @@ class Round(models.Model):
     round_number = models.CharField(max_length=35)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     current = models.BooleanField(blank=True,null=True)
+    date = models.DateField(auto_now_add=True, blank=True,null=True)
+    
+    class Meta:
+        ordering = ["-date"]
     
     def __str__(self):
         return self.round_number
