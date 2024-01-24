@@ -20,7 +20,14 @@
         <td>{{forloop.counter}}</td>
         <td>{{tournament.tournament_name}}</td>
         <td>{{tournament.end_date}}</td>
-        <th><a class="btn btn-success btn-sm" href="{% url 'edittour' tournament.pk %}">Edit</a> | <button class="btn btn-primary btn-sm" href="">View</button></th>
+        <th>
+            {% if tournament.finished == True %}
+            <button class="btn btn-primary btn-sm" href="">View</button>
+            {% else %}
+            <a class="btn btn-success btn-sm" href="{% url 'edittour' tournament.pk %}">Edit</a> | <button class="btn btn-primary btn-sm" href="">View</button>
+            {% endif %}
+        </th>
+
     </tr>
     {% endfor %}
 </tbody>
