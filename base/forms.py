@@ -1,6 +1,7 @@
 from django import forms
-from .models import Tournament
+from .models import Tournament,Request
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 
 class EditTournamentForm(ModelForm):
     
@@ -25,8 +26,14 @@ class EditTournamentForm(ModelForm):
             'squad' : forms.Select(attrs={'class':'form-control my-1', 'placeholder':'Squad type'}),
             'weapon' : forms.Select(attrs={'class':'form-control my-1', 'placeholder':'Weapon type'}),
             'started' : forms.CheckboxInput(attrs={'class':'form-check my-1','placeholder':'Started ?'}),
-            'start_date' : forms.DateInput(attrs={'class':'form-control my-1','placeholder':'Started date'}),
-            'end_date': forms.DateInput(attrs={'class':'form-control my-1', 'placeholder':'Ending date'}),
-            'finished' : forms.CheckboxInput(attrs={'class':'form-check my-1','placeholder':'Finished ?'}),
+            'start_date' : forms.DateInput(attrs={'class':'form-control my-1','placeholder':'Started date','type':'date'}),
+            'end_date': forms.DateInput(attrs={'class':'form-control my-1', 'placeholder':'Ending date','type':'date'}),
+            'finished' : forms.CheckboxInput(attrs={'class':'form-check','placeholder':'Finished ?'}),
             'available' : forms.CheckboxInput(attrs={'class':'form-check my-1', 'placeholder': 'Available'})
         }
+
+class RequestForm(ModelForm):
+    
+    class Meta:
+        model = Request
+        fields = ('player', 'tournament')

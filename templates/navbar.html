@@ -14,15 +14,7 @@
               <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2m3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2M5 8h6a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1"/>
             </svg></a>
           </li>
-          {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="">Logout</a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="">Sign Up / Login</a>
-          </li>
-          {% endif %}
+          
           {% if user.is_superuser %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,8 +26,17 @@
               <li><a class="dropdown-item" href="#">Matches</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Advanced</a></li>
-
             </ul>
+
+            {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="">Sign Up / Login</a>
+          </li>
+          {% endif %}
           </li>
           {% endif %}
         </ul>

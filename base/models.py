@@ -40,6 +40,26 @@ class Tournament(models.Model):
    def __str__(self):
        return self.tournament_name
 
+class Participant(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    participant_title = models.CharField(max_length=50)
+    participant_list = models.ManyToManyField(User, blank=True)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    is_open = models.BooleanField()
+
+    def __str__(self):
+        return self.participant_title 
+    
+class Request(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE) 
+    is_approved = models.BooleanField(default=False, blank=True,null=True)
+
+#    def __str__(self):
+#       return self.tournament
+
+
 class Round(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     round_number = models.CharField(max_length=35)

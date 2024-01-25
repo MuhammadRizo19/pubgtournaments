@@ -4,7 +4,7 @@ from django.views import generic
 from datetime import date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied 
-from .forms import EditTournamentForm 
+from .forms import EditTournamentForm,RequestForm 
 from django.urls import reverse_lazy
 
 def home(request):
@@ -43,8 +43,18 @@ def tourpage(request,tour_id):
         return render(request, 'tournament/fixtures.html', context)
     
     else:
-        context = {'tournament':tour}
+        if request.method == 'POST':
+            form = RequestForm(request.POST)
+            if form.is_valid():                
+                request = form.save(commit=False)
+                request.player = request.user
+                request.tournament = tour.tournament_name
+                request.save()
+                return redirect('tourlist')
+        context = {'tournament':tour, 'form': request}
         return render(request, 'tournament/pretour.html', context)
+    
+
 
 """""
 def roundpage(request, round_id):
