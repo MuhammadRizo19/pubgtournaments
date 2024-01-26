@@ -42,10 +42,12 @@ class ApprovalRequestForm(ModelForm):
 
     class Meta:
         model = Request
-        fields = ('is_approved',)
+        fields = ('is_approved','checked')
         labels = {
-            'is_approved': 'Approve this player to participate the Tournament'
+            'is_approved': 'I Approve this player to participate the Tournament',
+            'checked': 'I have checked'
         }
         widgets = {
-            'is_approved': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'Approve'})
+            'is_approved': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'Approve'}),
+            'checked': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'I have checked'})
             }

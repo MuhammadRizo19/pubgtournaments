@@ -21,7 +21,7 @@
               All Settings
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'advancedtourlist' %}">All Tournaments</a></li>
+              <li><a class="dropdown-item" href="{% url 'advancedtourlist' %}">All Tournaments {% if waiting %}<span class="badge text-bg-danger badge-sm">{{waiting}}</span>{% endif %}</a></li>
               <li><a class="dropdown-item" href="#">All Rounds</a></li>
               <li><a class="dropdown-item" href="#">Matches</a></li>
               <li><hr class="dropdown-divider"></li>

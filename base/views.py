@@ -1,4 +1,4 @@
-from .models import Tournament,Round,Match, Request
+from .models import Tournament,Round,Match, Request, Participant
 from django.shortcuts import render,redirect
 from django.views import generic
 from datetime import date
@@ -29,7 +29,8 @@ def tourlist(request):
 
 def advancedtourlist(request):
     tournaments = Tournament.objects.all()
-    context = {'tournaments' : tournaments}
+    waiting = Request.objects.all().filter(checked=False).count()
+    context = {'tournaments' : tournaments, 'waiting':waiting}
     return render(request, 'forstaff/tourlist.html', context)
 
 
@@ -44,17 +45,20 @@ def tourpage(request,tour_id):
     
     else:
         form = RequestForm(request.POST)
+        participant = tour.participants
+        registered = Participant.objects.get(tournament=tour)
+        count = registered.participant_title.__len__
         if request.method == 'POST':
             if form.is_valid():              
                 form.save()
                 return redirect('tourlist')
-        context = {'tournament':tour, 'form': form}
+        context = {'tournament':tour, 'form': form, 'participants' : participant, 'registered':registered, 'count':count}
         return render(request, 'tournament/pretour.html', context)
     
 
 def tourdetail(request, tour_id):
     tour = Tournament.objects.get(id=tour_id)
-    requests = Request.objects.all().filter(tournament=tour)
+    requests = Request.objects.all().filter(tournament=tour).order_by('-created')
     waiting = Request.objects.all().filter(tournament=tour,checked=False).count()
     context = {'tour':tour, 'requests':requests,'waiting':waiting}
     return render(request, 'forstaff/tourdetail.html', context)
@@ -64,6 +68,10 @@ class ApprovalRequest(LoginRequiredMixin,generic.UpdateView):
     form_class = ApprovalRequestForm
     success_url = reverse_lazy('advancedtourlist')
     template_name = 'forstaff/approval.html'
+
+    def get_queryset(self):
+        return super().get_queryset()
+    
 #request = form.save(commit=False)
                 #request.player = request.user
   #              request.tournament = tour.tournament_name
