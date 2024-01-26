@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-3 px-2 text-light">
+<h3 class="text-center mt-1">{{tour.tournament_name}}</h3>
+<hr>    
+<ul class="nav nav-pills mb-2 d-flex align-items-center nav-justified py-1" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Full Info</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Requests {% if waiting %}<span class="badge text-bg-danger">{{waiting}}</span>{% endif %}</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Participants</button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+        
+        <div class="d-flex flex-column">
+            <h5 class="">Tournament name : {{tour.tournament_name}}</h5>
+            <h5 class="">Type of weapon : {{tour.weapon}}</h5>
+            <h5 class="">Registered participants : 28</h5>
+            <h5 class="">Number of participants : {{tour.participants}}</h5>
+            <h5 class="">Type of squad : {{tour.squad}}</h5>
+            <h5 class="">Type of weapon : {{tour.start_date}}</h5>
+            <h5 class="">{{tour.tournament_rules|linebreaks}}</h5>
+        </div>        
+
+    </div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+        {% if requests %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Request</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td> {{forloop.counter}}</td>
+                    <td> <a class="text-decoration-none" href="{% url 'approval' request.pk %}"> {{request.id}} </a></td>
+                    <td>{{request.created}}</td>
+
+                
+                    {% if request.is_approved == True %}
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                          </svg> approved
+                    </td>
+                    {% elif request.is_approved == False %}
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                          </svg> not approved
+                    </td>
+                    {% else %}
+                    <td>
+                        waiting ...
+                    </td>
+                    {% endif %}
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if waiting == 0 %}
+        <h5>No waiting requests</h5>
+        {% else %}
+        <h5>{{waiting}} requests are waiting for your decision</h5>
+        {% endif %}
+        {% else %}
+        <h4>No any requests for now</h4>
+        {% endif %}
+    </div>
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">...</div>
+  </div>
+</div>
+{% endblock content %}

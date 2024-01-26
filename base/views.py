@@ -1,10 +1,10 @@
-from .models import Tournament,Round,Match
+from .models import Tournament,Round,Match, Request
 from django.shortcuts import render,redirect
 from django.views import generic
 from datetime import date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied 
-from .forms import EditTournamentForm,RequestForm 
+from .forms import EditTournamentForm,RequestForm,ApprovalRequestForm
 from django.urls import reverse_lazy
 
 def home(request):
@@ -43,17 +43,30 @@ def tourpage(request,tour_id):
         return render(request, 'tournament/fixtures.html', context)
     
     else:
+        form = RequestForm(request.POST)
         if request.method == 'POST':
-            form = RequestForm(request.POST)
-            if form.is_valid():                
-                request = form.save(commit=False)
-                request.player = request.user
-                request.tournament = tour.tournament_name
-                request.save()
+            if form.is_valid():              
+                form.save()
                 return redirect('tourlist')
-        context = {'tournament':tour, 'form': request}
+        context = {'tournament':tour, 'form': form}
         return render(request, 'tournament/pretour.html', context)
     
+
+def tourdetail(request, tour_id):
+    tour = Tournament.objects.get(id=tour_id)
+    requests = Request.objects.all().filter(tournament=tour)
+    waiting = Request.objects.all().filter(tournament=tour,checked=False).count()
+    context = {'tour':tour, 'requests':requests,'waiting':waiting}
+    return render(request, 'forstaff/tourdetail.html', context)
+
+class ApprovalRequest(LoginRequiredMixin,generic.UpdateView):
+    model = Request
+    form_class = ApprovalRequestForm
+    success_url = reverse_lazy('advancedtourlist')
+    template_name = 'forstaff/approval.html'
+#request = form.save(commit=False)
+                #request.player = request.user
+  #              request.tournament = tour.tournament_name
 
 
 """""

@@ -37,3 +37,15 @@ class RequestForm(ModelForm):
     class Meta:
         model = Request
         fields = ('player', 'tournament')
+    
+class ApprovalRequestForm(ModelForm):
+
+    class Meta:
+        model = Request
+        fields = ('is_approved',)
+        labels = {
+            'is_approved': 'Approve this player to participate the Tournament'
+        }
+        widgets = {
+            'is_approved': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'Approve'})
+            }

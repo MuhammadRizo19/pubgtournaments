@@ -55,6 +55,15 @@ class Request(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE) 
     is_approved = models.BooleanField(default=False, blank=True,null=True)
+    created = models.DateTimeField(auto_now_add=True, blank=True,null=True)
+    checked = models.BooleanField()
+    
+    def save(self, *args, **kwargs):
+        if self.is_approved == True or False:
+            self.checked = True
+        else:
+            self.checked = False
+        super().save(*args, **kwargs)
 
 #    def __str__(self):
 #       return self.tournament
