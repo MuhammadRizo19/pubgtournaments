@@ -16,10 +16,6 @@
 <form action="" method="POST">
 {% csrf_token %}
 {{form}}
-
-{{participants}}
-{{registered}}
-{{count}}
 <button class="btn btn-primary fw-bold d-block mx-auto px-5 py-2">Apply now </button>
 
 {% if field.errors %}

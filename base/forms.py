@@ -38,6 +38,12 @@ class RequestForm(ModelForm):
         model = Request
         fields = ('player', 'tournament')
     
+    def __init__(self, player=None, **kwargs):
+        super(RequestForm, self).__init__(**kwargs)
+        if player:
+            self.fields['tournament'].queryset = models.Tournament.objects.filter(finished=False)
+    
+    
 class ApprovalRequestForm(ModelForm):
 
     class Meta:

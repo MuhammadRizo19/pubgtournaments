@@ -90,19 +90,6 @@ class Match(models.Model):
         return self.match_name
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 """""
 class Round(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)

@@ -45,14 +45,13 @@ def tourpage(request,tour_id):
     
     else:
         form = RequestForm(request.POST)
-        participant = tour.participants
-        registered = Participant.objects.get(tournament=tour)
-        count = registered.participant_title.__len__
+#        participant = tour.participants
+#       count = registered.participant_title.__len__
         if request.method == 'POST':
-            if form.is_valid():              
+            if form.is_valid():           
                 form.save()
                 return redirect('tourlist')
-        context = {'tournament':tour, 'form': form, 'participants' : participant, 'registered':registered, 'count':count}
+        context = {'tournament':tour, 'form': form}
         return render(request, 'tournament/pretour.html', context)
     
 
