@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Profile
 from .forms import EditProfile
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
 
 def logoutuser(request):
     logout(request)
@@ -48,14 +50,34 @@ def profiledetail(request, pro_id):
     context = {'profile':profile}
     return render(request, 'profile/profile.html', context)
 
+def profileview(request, pr_id):
+    profile = Profile.objects.get(id=pr_id)
+    context = {'profile':profile}
+    return render(request, 'forstaff/profileview.html', context)
+"""""
 def editprofile(request, pro_id):
-    profile = Profile.objects.get(user=request.user)
-    if request.method == 'POST':
-        form = EditProfile(instance=profile, data=request.POST,files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    
+    profile = Profile.objects.get(id=pro_id)
+    form = EditProfile(request.POST or None, request.FILES or None,instance=profile)
+    if form.is_valid():
+        form.save()
+        return redirect('profiledetail')
     else:
         form = EditProfile(instance=request.user.profile)
     return render(request,'profile/editprofile.html', {'form':form})
+"""""
+class UpdateProfile(LoginRequiredMixin,generic.UpdateView):
+    model = Profile
+    template_name = 'profile/editprofile.html'
+    form_class = EditProfile
+    login_url = 'login'
+
+    def form_valid(self, form):
+      self.object = form.save(commit=False)
+      self.object.save()
+      return redirect ('profile', self.object.pk)
+    
+def allusers(request):
+    allusers = User.objects.all()
+    context = {'allusers':allusers}
+    return render(request, 'forstaff/allusers.html',context)
+

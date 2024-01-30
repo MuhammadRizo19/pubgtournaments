@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} All Users {% endblock %}
+
+{% block content %}
+<div class="container text-light py-3">
+ <h1>List of all users</h1>
+ <hr>
+ <table class="table">
+    <thead>
+        <tr class="bg-dark">
+            <th>#</th>
+            <th>Username</th>
+            <th>profile</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in allusers %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{user.username}}</td>
+            <td> {% if user.profile.avatar %}
+                <img src="{{user.profile.avatar.url}}" width="30" class="rounded-circle" alt="">
+                 <a class="text-decoration-none" href="{% url 'profileview' user.profile.pk %}">{{user.profile}}</a>
+                {% else %}
+                <img src="{% static 'default/default.jpg' %}" width="30" class="rounded-circle" alt="">
+                <a class="text-decoration-none" href="{% url 'profileview' user.profile.pk %}">{{user.profile}}</a>
+                {% endif %}
+            </td>
+
+         </tr>
+        {% endfor %}
+    </tbody>
+ </table>
+ </div>
+{% endblock content %}
