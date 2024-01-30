@@ -17,5 +17,19 @@ Pubg id : 51217041371
 </div>
 </div>
 <hr>    
+<div class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1>{{profile.points}} <span style="font-size: 20px;">points</span></h1>
+    </div>
+    <div>
+        <h1>{{profile.points}} <span style="font-size: 20px;">wins</span></h1>
+    </div>
+    <div>
+        <h1>{{profile.points}} <span style="font-size: 20px;">Trophy</span></h1>
+    </div>
+</div>
+<div class="d-flex my-2">
+<a href="{% url 'editprofile' profile.pk %}" class="btn btn-success">Edit profile</a>
+</div>
 </div>
 {% endblock content %}

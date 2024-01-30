@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Profile
+from .forms import EditProfile
 
 def logoutuser(request):
     logout(request)
@@ -46,3 +47,15 @@ def profiledetail(request, pro_id):
     profile = Profile.objects.get(user=request.user)
     context = {'profile':profile}
     return render(request, 'profile/profile.html', context)
+
+def editprofile(request, pro_id):
+    profile = Profile.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = EditProfile(instance=profile, data=request.POST,files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    
+    else:
+        form = EditProfile(instance=request.user.profile)
+    return render(request,'profile/editprofile.html', {'form':form})
