@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg bg-warning">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">Pubg Tournaments</a>
@@ -5,7 +6,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
@@ -27,17 +28,25 @@
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Advanced</a></li>
             </ul>
-
-            {% if user.is_authenticated %}
+            {% endif %}
+          {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link" href="">Logout</a>
+            {% if profile.avatar %}
+            <a class="nav-link" href="{% url 'profile' profile.pk %}"><img style="border-radius: 50%;" width="30" height="30" src="{{profile.avatar.url}}" alt=""></a>
+            {% else %}
+            <a class="nav-link" href="{% url 'profile' profile.pk %}"><img style="border-radius: 50%;" width="30" height="30" src="{% static 'default/default.jpg'%}" alt=""></a>
+            {% endif %}
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="">Sign Up / Login</a>
+            <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
           </li>
-          {% endif %}
-          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>  
           {% endif %}
         </ul>
         <form class="d-flex" role="search">

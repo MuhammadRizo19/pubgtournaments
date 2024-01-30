@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-3 px-2 text-light">
+<div class="d-flex">
+{% if profile.avatar %}
+<img src="{{profile.avatar.url}}" class="rounded" width="110" height="110" alt="Profil rasm"> 
+{% else %}
+<img src="{% static 'default/default.jpg'%}" class="rounded" width="100" alt="Profil rasm">
+{% endif %}
+<div class="d-flex flex-column mx-3">  
+<p>Username : {{profile.user}}</p>
+<p>Bio : {{profile.bio}} <br>
+Pubg id : 51217041371
+</p>
+</div>
+</div>
+<hr>    
+</div>
+{% endblock content %}

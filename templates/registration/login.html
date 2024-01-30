@@ -7,17 +7,21 @@
  <h1>Sign in your account</h1>
  <p>
     Please, use the following form to log-in.
-    If you don't have an account <a href="{% url 'register' %}">register here</a>.
+    If you don't have an account <a class="text-decoration-none" href="{% url 'register' %}">register here</a>.
    </p>
  <hr>
- <form method="post">
-    
-    {{ form.as_p }}
-    
-    {% csrf_token %}
- 
-    <p><input type="submit" class="btn btn-primary" value="Login"></p>
- 
+<form action="" method="post">
+   {% csrf_token %}
+   <input type="text" class="form-control" name="username", placeholder="Enter username"><br>
+   <input type="password" class="form-control" name="password", placeholder="Enter password"> <br>
+   <button class="btn btn-success"> Login </button>
 </form>
+
+{% for message in messages %}
+<div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
+    <strong> {{message}}</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
 </div>
 {% endblock %}

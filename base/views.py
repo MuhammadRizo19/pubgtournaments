@@ -1,4 +1,5 @@
 from .models import Tournament,Round,Match, Request, Participant
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 from django.views import generic
 from datetime import date
@@ -6,9 +7,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied 
 from .forms import EditTournamentForm,RequestForm,ApprovalRequestForm
 from django.urls import reverse_lazy
+from user.models import Profile 
 
+@login_required(login_url="account/login")
 def home(request):
-    return render(request, 'index.html')
+    profile = Profile.objects.get(user=request.user)
+    context = {'profile':profile}
+    return render(request, 'index.html', context)
+
 
 class EditTour(LoginRequiredMixin,generic.UpdateView):
     model = Tournament
@@ -27,13 +33,14 @@ def tourlist(request):
     context = {'tournaments' : tournaments}
     return render(request, 'tournament/tourlist.html', context)
 
+@login_required
 def advancedtourlist(request):
     tournaments = Tournament.objects.all()
     waiting = Request.objects.all().filter(checked=False).count()
     context = {'tournaments' : tournaments, 'waiting':waiting}
     return render(request, 'forstaff/tourlist.html', context)
 
-
+@login_required
 def tourpage(request,tour_id):
     tour = Tournament.objects.get(id=tour_id)
     if tour.started == True:
@@ -54,7 +61,7 @@ def tourpage(request,tour_id):
         context = {'tournament':tour, 'form': form}
         return render(request, 'tournament/pretour.html', context)
     
-
+@login_required
 def tourdetail(request, tour_id):
     tour = Tournament.objects.get(id=tour_id)
     requests = Request.objects.all().filter(tournament=tour).order_by('-created')
