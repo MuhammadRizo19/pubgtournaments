@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Profile
+from .models import Profile,Point
 
 class EditProfile(ModelForm):
 
@@ -12,3 +12,10 @@ class EditProfile(ModelForm):
             'bio':forms.Textarea(attrs={'class':'form-control my-1', 'placeholder':'Bio'}),
             'pubg_id': forms.TextInput(attrs={'class':'form-control my-1','placeholder':'Pubg id'})
             }
+
+class AddPointForm(ModelForm):
+
+    class Meta:
+        model = Point
+        fields = ('player', 'points')
+        

@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from django.db import models
 import uuid
 from django.urls import reverse
@@ -21,12 +22,28 @@ class Point(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     player = models.ForeignKey(Profile,on_delete=models.CASCADE)
     points = models.IntegerField(default=0, blank=True, null=True)
+    reason = models.CharField(max_length=50,blank=True, null=True)
     added = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-       if self.player == Profile.objects.get(user=self.player):
-           self.player.points = self.player.points + self.points  
-       super().save(*args, **kwargs)
+        player1 = Profile.objects.get(user=self.player.user)
+        if self.player == player1:
+            player1.points = player1.points + self.points
+            player1.save()
+        super(Point, self).save(*args, **kwargs)
 
-    def __str__(self):
-        return self.player
+
+class MinusPoint(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    player = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    points = models.IntegerField(default=0, blank=True, null=True)
+    reason = models.CharField(max_length=50,blank=True, null=True)
+    added = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        player1 = Profile.objects.get(user=self.player.user)
+        if self.player == player1:
+            if player1.points  > 0:
+                player1.points = player1.points - self.points
+                player1.save()
+        super(MinusPoint, self).save(*args, **kwargs)

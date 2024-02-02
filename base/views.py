@@ -33,14 +33,12 @@ def tourlist(request):
     context = {'tournaments' : tournaments}
     return render(request, 'tournament/tourlist.html', context)
 
-@login_required
 def advancedtourlist(request):
     tournaments = Tournament.objects.all()
     waiting = Request.objects.all().filter(checked=False).count()
     context = {'tournaments' : tournaments, 'waiting':waiting}
     return render(request, 'forstaff/tourlist.html', context)
 
-@login_required
 def tourpage(request,tour_id):
     tour = Tournament.objects.get(id=tour_id)
     if tour.started == True:
@@ -61,7 +59,6 @@ def tourpage(request,tour_id):
         context = {'tournament':tour, 'form': form}
         return render(request, 'tournament/pretour.html', context)
     
-@login_required
 def tourdetail(request, tour_id):
     tour = Tournament.objects.get(id=tour_id)
     requests = Request.objects.all().filter(tournament=tour).order_by('-created')

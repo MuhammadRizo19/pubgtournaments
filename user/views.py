@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Profile
-from .forms import EditProfile
+from .models import Profile, Point, MinusPoint
+from .forms import EditProfile, AddPointForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 
@@ -52,7 +52,8 @@ def profiledetail(request, pro_id):
 
 def profileview(request, pr_id):
     profile = Profile.objects.get(id=pr_id)
-    context = {'profile':profile}
+    points = Point.objects.all().filter(player=profile.user)
+    context = {'profile':profile, 'points':points}
     return render(request, 'forstaff/profileview.html', context)
 """""
 def editprofile(request, pro_id):
@@ -81,3 +82,18 @@ def allusers(request):
     context = {'allusers':allusers}
     return render(request, 'forstaff/allusers.html',context)
 
+""""
+def addpoint(request):
+    if request.method == 'POST':
+        form = AddPointForm(request.POST)
+        player1 = Profile.objects.get(user=form.player)
+        if form.is_valid():
+            myform = form.save(commit=False)
+            player1.points = player1.points + myform.points
+            player1.save()
+            myform.save()
+
+        else:
+            form = AddPointForm()
+        return render()
+"""""

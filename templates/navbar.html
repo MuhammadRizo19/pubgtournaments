@@ -30,13 +30,29 @@
             </ul>
             {% endif %}
           {% if user.is_authenticated %}
+          {% if profile %}
           <li class="nav-item">
-            {% if profile.avatar %}
-            <a class="nav-link" href="{% url 'profile' profile.pk %}"><img style="border-radius: 50%;" width="30" height="30" src="{{profile.avatar.url}}" alt=""></a>
-            {% endif %}
-          </li>
+                <a class="nav-link" href="{% url 'profile' profile.pk %}">Account</a>
+           </li>
+           {% endif %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Logout</a>
+            <!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Would you like to log out ?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No. close</button>
+        <a  href="{% url 'logout' %}" type="button" class="btn btn-danger">Yes. I would</a>
+      </div>
+    </div>
+  </div>
+</div>
           </li>
           {% else %}
           <li class="nav-item">
