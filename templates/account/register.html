@@ -9,10 +9,10 @@
  <hr>
  <form action="" method="post">
     {% csrf_token %}
-    <input type="text" class="form-control fw-bold", name="username" placeholder="Username"><br>
-    <input type="email" class="form-control fw-bold", name="email" placeholder="email"><br>
-    <input type="password", min="5" class="form-control fw-bold", name="password1",  placeholder="Enter password"><br>
-    <input type="password", max="20" class="form-control fw-bold", name="password2", placeholder="Repeat password"><br>
+    <input type="text" class="form-control fw-bold", name="username" placeholder="Username" required><br>
+    <input type="email" class="form-control fw-bold", name="email" placeholder="email" required><br>
+    <input type="password", min="5" class="form-control fw-bold", name="password1",  placeholder="Enter password" required><br>
+    <input type="password", max="20" class="form-control fw-bold", name="password2", placeholder="Repeat password" required><br>
     <button class="btn btn-success d-block mx-auto fw-bold"> Create account</button>
  </form>
  <center class="mt-2">

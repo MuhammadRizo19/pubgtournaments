@@ -11,8 +11,16 @@
 {% endif %}
 <div class="d-flex flex-column mx-3">  
 <p>Username : {{profile.user}}</p>
+{% if profile.bio %}
 <p>Bio : {{profile.bio}} <br>
+{% else %}
+<p>Bio : <span class="text-danger">Not filled</span> </p>
+{% endif%}
+{% if profile.pubg_id%}
 Pubg id : 51217041371
+{% else %}
+<p>Pubg id : <span class="text-danger">Not filled</span> </p>
+{% endif %}
 </p>
 </div>
 </div>
