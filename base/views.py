@@ -43,9 +43,7 @@ def tourpage(request,tour_id):
     tour = Tournament.objects.get(id=tour_id)
     if tour.started == True:
         rounds = Round.objects.all().filter(tournament=tour)
-        for round in rounds:
-            matches = Match.objects.all().filter(forround=round)
-        context = {'rounds':rounds, 'matches':matches}
+        context = {'rnds':rounds}
         return render(request, 'tournament/fixtures.html', context)
     
     else:

@@ -16,16 +16,16 @@
         </tr>
     </thead>
     <tbody>
-        {% for user in allusers %}
+        {% for us in allusers %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{user.username}}</td>
-            <td> {% if user.profile.avatar %}
-                <img src="{{user.profile.avatar.url}}" width="30" class="rounded-circle" alt="">
-                 <a class="text-decoration-none" href="{% url 'profileview' user.profile.pk %}">{{user.profile}}</a>
+            <td>{{us.username}}</td>
+            <td> {% if us.profile.avatar %}
+                <img src="{{us.profile.avatar.url}}" width="30" class="rounded-circle" alt="">
+                 <a class="text-decoration-none" href="{% url 'profileview' us.profile.pk %}">{{us.profile}}</a>
                 {% else %}
                 <img src="{% static 'default/default.jpg' %}" width="30" class="rounded-circle" alt="">
-                <a class="text-decoration-none" href="{% url 'profileview' user.profile.pk %}">{{user.profile}}</a>
+                <a class="text-decoration-none" href="{% url 'profileview' us.profile.pk %}">{{us.profile}}</a>
                 {% endif %}
             </td>
 
