@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import uuid
 from datetime import date
+from user.models import Profile
 
 class Tournament(models.Model):
    
@@ -28,14 +29,13 @@ class Tournament(models.Model):
    finished = models.BooleanField(blank=True,null=True)
    available = models.BooleanField()
 
-   """""   
+   
    def save(self, *args, **kwargs):
-       if self.end_date < date.today():
-           self.finished = True
+       if self.finished == True:
+           self.available = False
        else:
-           self.finished = False 
+           self.available = True 
        super().save(*args, **kwargs)
-   """""
 
    def __str__(self):
        return self.tournament_name
@@ -80,8 +80,18 @@ class Match(models.Model):
     match_name = models.CharField(max_length=35)
     player_1 = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = 'player1')
     player_2 = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = 'player2')
-    forround = models.ForeignKey(Round, on_delete=models.DO_NOTHING)
+    forround = models.ForeignKey(Round, on_delete=models.CASCADE)
+    overall_1 = models.IntegerField(default=0,blank=True, null=True)
+    overall_2 = models.IntegerField(default=0,blank=True, null=True)
+    winner = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     total = models.CharField(max_length=35, blank=True, null=True)
+
+    def save(self, *args, **kwargs):
+        if self.overall_1 > self.overall_2:
+           self.winner = self.player_1
+        else:
+           self.winner = self.player_2
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.match_name

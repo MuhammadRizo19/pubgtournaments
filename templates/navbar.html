@@ -24,7 +24,7 @@
               <li><a class="dropdown-item" href="{% url 'allusers' %}">All Users</a></li>
               <li><a class="dropdown-item" href="#">Matches</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Advanced</a></li>
+              <li><a class="dropdown-item" href="{% url 'advanced' %}">Advanced</a></li>
             </ul>
             {% endif %}
           {% if user.is_authenticated %}

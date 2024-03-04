@@ -18,27 +18,28 @@
     <tbody>
         {% for profile in allprofiles %}
         {% if forloop.counter == 1 %} 
-       <tr class="border border-0">
-        <td class="bg-dark text-light font-effect-fire">{{forloop.counter}}</td>
-        <td class="bg-dark text-light font-effect-fire"><a class="text-decoration-none text-light" href="{% url 'profileview' profile.pk %}">{{profile.user}}</a></td>
-        <td class="bg-dark text-light font-effect-fire">{{profile.points}}</td>
+       <tr class="" style="vertical-align: middle;">
+        <td class="text-dark bg-primary"><img src="{% static 'default/first.png' %}" width="50" class="rounded-circle" alt=""></td>
+        <td class="text-dark bg-primary" style="background-color:goldenrod;"><a class="text-decoration-none text-dark" href="{% url 'profileview' profile.pk %}">
+       <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" alt="">  {{profile.user}}</a></td>
+        <td class="text-dark bg-primary" style="background-color:goldenrod;">{{profile.points}}</td >
        </tr>
        {% elif forloop.counter == 2 %} 
-       <tr class="border border-0">
-        <td class="bg-dark text-light font-effect-neon">{{forloop.counter}}</td>
-        <td class="bg-dark text-light font-effect-neon"><a class="text-decoration-none text-light" href="{% url 'profileview' profile.pk %}">{{profile.user}}</a></td>
-        <td class="bg-dark text-light font-effect-neon">{{profile.points}}</td>
+       <tr class="border border-0" style="vertical-align: middle;">
+        <td class="text-dark" style="background-color:#d3d3d3;"><img src="{% static 'default/second1.svg' %}" width="50" class="rounded-circle" alt=""></td>
+        <td class="text-dark" style="background-color:#d3d3d3;"><a class="text-decoration-none text-dark" href="{% url 'profileview' profile.pk %}"> <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" alt="">  {{profile.user}}</a></td>
+        <td class="text-dark" style="background-color:#d3d3d3;">{{profile.points}}</td>
        </tr>
        {% elif forloop.counter == 3 %} 
-       <tr class="border border-start-0 border-end-0 border-top-0 border-bottom-1">
-        <td class="bg-dark text-info">{{forloop.counter}}</td>
-        <td class="bg-dark text-info"><a class="text-decoration-none text-info" href="{% url 'profileview' profile.pk %}"> {{profile.user}}</a></td>
-        <td class="bg-dark text-info">{{profile.points}}</td>
-       </tr>
+       <tr class="border border-start-0 border-end-0 border-top-0 border-bottom-3 border-bottom-1-dark" style="vertical-align: middle;">
+        <td class="text-dark" style="background-color:#db9d40;"><img src="{% static 'default/third.png' %}" width="50" class="rounded-circle" alt=""></td>
+        <td class="text-dark" style="background-color:#db9d40;"><a class="text-decoration-none text-dark" href="{% url 'profileview' profile.pk %}"> <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" alt="">  {{profile.user}}</a></td>
+        <td class="text-dark" style="background-color:#db9d40;">{{profile.points}}</td>   
+    </tr>
        {% else %}
-       <tr class="border border-0">
+       <tr class="border border-start-0 border-end-0" style="vertical-align: middle;">
         <td class="bg-dark text-light">{{forloop.counter}}</td>
-        <td class="bg-dark text-light"><a class="text-decoration-none text-light" href="{% url 'profileview' profile.pk %}"> {{profile.user}}</a></td>
+        <td class="bg-dark text-light"><a class="text-decoration-none text-light" href="{% url 'profileview' profile.pk %}"> <img src="{{profile.avatar.url}}" width="50" class="rounded-circle" alt=""> {{profile.user}}</a></td>
         <td class="bg-dark text-light">{{profile.points}}</td>
        </tr>
        {% endif %}

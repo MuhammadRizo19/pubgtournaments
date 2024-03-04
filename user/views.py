@@ -51,6 +51,7 @@ def profiledetail(request, pro_id):
     match1 = Match.objects.all().filter(player_2=profile.user).count()
     match2 = Match.objects.all().filter(player_1=profile.user).count()
     totalmatches = match1 + match2
+    #wins = Match.objects.all().filter(winner=pro_id).count()
     context = {'profile':profile, 'matches':totalmatches}
     return render(request, 'profile/profile.html', context)
 
@@ -110,3 +111,13 @@ def leadersboard(request):
     own = Profile.objects.get(user=request.user)
     context = {'allprofiles':allprofiles, 'own':own}
     return render(request, 'leadersboards.html',context)
+
+def addpoint(request):
+    if request.method == 'POST':
+        form = AddPointForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('advanced')
+    else:
+        form = AddPointForm()
+        return render(request, 'forstaff/addpoint.html', {'form':form}) 

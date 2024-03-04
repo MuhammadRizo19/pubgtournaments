@@ -17,5 +17,12 @@ class AddPointForm(ModelForm):
 
     class Meta:
         model = Point
-        fields = ('player', 'points')
+        fields = ('player', 'points', 'reason')
+        widgets = {
+            'player' : forms.Select(attrs={'class':'form-control my-1', 'placeholder':'Player'}),
+            'points' : forms.NumberInput(attrs={'class':'form-control my-1', 'placeholder':'Point'}),
+            'reason' : forms.TextInput(attrs={'class':'form-control my-1', 'placeholder':'Reason'}),
+        }
+
+
         

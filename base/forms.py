@@ -17,7 +17,7 @@ class EditTournamentForm(ModelForm):
             'start_date',
             'end_date',
             'finished',
-            'available'
+            #'available'
         )
         widgets = {
             'tournament_name':forms.TextInput(attrs={'class':'form-control my-1', 'placeholder':'Tournament Name'}),
@@ -29,7 +29,7 @@ class EditTournamentForm(ModelForm):
             'start_date' : forms.DateInput(attrs={'class':'form-control my-1','placeholder':'Started date','type':'date'}),
             'end_date': forms.DateInput(attrs={'class':'form-control my-1', 'placeholder':'Ending date','type':'date'}),
             'finished' : forms.CheckboxInput(attrs={'class':'form-check','placeholder':'Finished ?'}),
-            'available' : forms.CheckboxInput(attrs={'class':'form-check my-1', 'placeholder': 'Available'})
+           # 'available' : forms.CheckboxInput(attrs={'class':'form-check my-1', 'placeholder': 'Available'})
         }
 
 class RequestForm(ModelForm):
@@ -62,9 +62,10 @@ class RoundCreationForm(ModelForm):
 
     class Meta:
         model = Round
-        fields = ('round_number','current')
+        fields = ('round_number','tournament','current')
         labels = {}
         widgets = {
-            'round_number' : forms.TextInput(attrs={'class':'form_control', 'placeholder':'Round number'}),
-            'current' : forms.CheckboxInput(attrs={'class':'form-check my-1','placeholder':'Current'}),
+            'round_number' : forms.TextInput(attrs={'class':'form-control mx-2', 'placeholder':'Round number'}),
+            'tournament': forms.Select(attrs={'class':'form-control my-1 mx-2', 'placeholder':'Tournament'}),
+            'current' : forms.CheckboxInput(attrs={'class':'form-check my-1 mx-2','placeholder':'Current'}),
         }

@@ -13,11 +13,12 @@
     <h5 class="">Type of weapon : {{tournament.start_date}}</h5>
     <h5 class="">{{tournament.tournament_rules|linebreaks}}</h5>
 </div>
+<!-----------
 <form action="" method="POST">
 {% csrf_token %}
 {{form}}
 <button class="btn btn-primary fw-bold d-block mx-auto px-5 py-2">Apply now </button>
-
+-------------->
 {% if field.errors %}
         <div class="invalid-feedback">
           {% for error in field.errors %}

@@ -42,7 +42,7 @@ def advancedtourlist(request):
 def tourpage(request,tour_id):
     tour = Tournament.objects.get(id=tour_id)
     if tour.started == True:
-        rounds = Round.objects.all().filter(tournament=tour)
+        rounds = Round.objects.all().filter(tournament=tour).order_by('date')
         context = {'rnds':rounds}
         return render(request, 'tournament/fixtures.html', context)
     
@@ -61,22 +61,23 @@ def tourdetail(request, tour_id):
     tour = Tournament.objects.get(id=tour_id)
     requests = Request.objects.all().filter(tournament=tour).order_by('-created')
     waiting = Request.objects.all().filter(tournament=tour,checked=False).count()
-    rounds = Round.objects.all().filter(tournament=tour)
+    rounds = Round.objects.all().filter(tournament=tour).order_by('date')
     context = {'tour':tour, 'requests':requests,'waiting':waiting, 'rounds':rounds}
     return render(request, 'forstaff/tourdetail.html', context)
 
 
 def createround(request, tour_id):
     tour = Tournament.objects.get(id=tour_id)
-    form = RoundCreationForm(request.POST)
     if request.method == 'POST':
+        form = RoundCreationForm(request.POST)
         if form.is_valid():
-            newform = form.save(commit=False)
-            newform.tournament = tour
-            newform.save()
+            form.tournament = Tournament.objects.all().filter(available=True)
+            form.save()
+            return redirect('advancedtourlist')
     
-    context = {'form':newform}
-    return render(request, 'forstaff/createround.html', context)
+    else:
+        form = RoundCreationForm()
+    return render(request, 'forstaff/createround.html', {'form':form})   
 
 
 class ApprovalRequest(LoginRequiredMixin,generic.UpdateView):
@@ -114,3 +115,11 @@ def roundview(request, rnd_id):
     matches = Match.objects.all().filter(forround=forround)
     context = {'myround':forround, 'matches':matches}
     return render(request, 'tournament/roundview.html', context)
+
+def deleteround(request, rnd_id):
+    dround = Round.objects.get(id=rnd_id)
+    dround.delete()
+    return redirect('advancedtourlist')
+
+def advanced(request):
+    return render(request, 'forstaff/advanced.html')

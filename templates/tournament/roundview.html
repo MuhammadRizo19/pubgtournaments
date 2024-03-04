@@ -1,32 +1,59 @@
-{% extends 'base.html' %}
+  {% extends 'base.html' %}
 
 {% block content %}
 <div class="container py-3 px-2 text-light">
 <h3 class="text-center mt-1">{{myround.round_number}}</h3>
 <hr>
 
-<table class="table">
-<!-------------    
-<thead>
-    <tr>
-        <th colspan="3" class="text-center bg-dark text-primary">{{myround.round_number}} fixture</th>
-    </tr>
-</thead>
--------------->
-<tbody>
-    {% for m in matches %} 
-    <tr>
-        <td> {{m.player_1}}</td>
-        <td class="text-start">0 : 0</td>
-        <td class="text-end">{{m.player_2}}</td>
-    </tr>
-    <tr class="border border-0">
-        <td colspan="3" class="text-center bg-dark"><a href="">About the match</a></td>
-    </tr>
-    {% endfor %}
-</tbody>
+{% for m in matches %} 
+<div class="d-flex justify-content-between w-100">
 
-</table>
+{% if m.winner == m.player_1 %}
+<p style="width: 33%;" class="text-start">{{m.player_1}}</p>
+{% else %}
+<p style="width: 33%;" class="text-start ">{{m.player_1}}</p>
+{% endif %}
+
+<p style="width:33%;" class="text-center">{{m.overall_1}} : {{m.overall_2}}</p>
+
+{% if m.winner == m.player_2 %}
+<p style="width:33%;" class="text-end mx-2 ">{{m.player_2}}</p>
+{% else %}
+<p style="width: 33%;" class="text-end">{{m.player_2}}</p>
+{% endif %}
+
+</div>
+
+<div class="mb-2">
+  <a href="" class="text-decoration-none btn btn-primary d-block mx-auto">About the match</a>
+</div>
+{% endfor %}
+ 
+
+
+
+{% if user.is_superuser or user.is_staff %}
+<a class="btn btn-danger my-2" data-bs-toggle="modal" data-bs-target="#Backdrop">Delete the Round</a>
+
+<div class="modal fade text-dark" id="Backdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete the round permanently</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          If you delete the round, you can't recover data about the round !
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="{% url 'deleteround' myround.pk %}" type="button" class="btn btn-danger">Understood</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
 
 </div>
 {% endblock content %}
