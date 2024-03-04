@@ -10,5 +10,5 @@ urlpatterns = [
     path('<uuid:pk>/update',views.UpdateProfile.as_view(),name='editprofile'),
     path('users', views.allusers, name='allusers'),
     path('<uuid:pr_id>/view/',views.profileview, name='profileview'),
-
+    path('leadersboard', views.leadersboard, name='leadersboard'),
 ]

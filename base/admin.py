@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tournament, Round ,Match, Participant, Request
+from .models import Tournament, Round ,Match, Participant, Request, Set
 
 # Register your models here.
 #admin.site.register(apply)
@@ -8,3 +8,4 @@ admin.site.register(Request)
 admin.site.register(Round)
 admin.site.register(Participant)
 admin.site.register(Tournament)
+admin.site.register(Set)

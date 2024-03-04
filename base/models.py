@@ -81,13 +81,22 @@ class Match(models.Model):
     player_1 = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = 'player1')
     player_2 = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name = 'player2')
     forround = models.ForeignKey(Round, on_delete=models.DO_NOTHING)
-    first_match = models.CharField(max_length=35, blank=True, null=True)
-    second_match = models.CharField(max_length=35, blank=True, null=True)
-    third_match = models.CharField(max_length=35, blank=True, null=True)
     total = models.CharField(max_length=35, blank=True, null=True)
 
     def __str__(self):
         return self.match_name
+
+
+class Set(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    set_number = models.CharField(max_length=20)
+    match = models.ForeignKey(Match, on_delete=models.DO_NOTHING)
+    player1_point = models.IntegerField()
+    player2_point = models.IntegerField()
+
+    def __str__(self):
+        return self.set_number
+
 
 
 """""

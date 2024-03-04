@@ -9,7 +9,7 @@
 {% if rnds %}
 {% for rnd in rnds %}
 <ul class="list-group">
-<li class="list-group-item my-1 d-flex justify-content-between align-items-center"> <span>{{rnd.round_number}}</span> <a class="text-decoration-none" href="">View -></a></li>
+<li class="list-group-item my-1 d-flex justify-content-between align-items-center"> <span>{{rnd.round_number}}</span> <a class="text-decoration-none" href="{% url 'roundview' rnd.pk %}">View -></a></li>
 </ul>
 {% endfor %}
 {% endif %}

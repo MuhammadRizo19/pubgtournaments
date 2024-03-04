@@ -1,5 +1,5 @@
 from django import forms
-from .models import Tournament,Request
+from .models import Tournament,Request,Round
 from django.forms import ModelForm
 from django.contrib.auth.models import User
 
@@ -57,3 +57,14 @@ class ApprovalRequestForm(ModelForm):
             'is_approved': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'Approve'}),
             'checked': forms.CheckboxInput(attrs={'class':'form-check', 'placeholder':'I have checked'})
             }
+
+class RoundCreationForm(ModelForm):
+
+    class Meta:
+        model = Round
+        fields = ('round_number','current')
+        labels = {}
+        widgets = {
+            'round_number' : forms.TextInput(attrs={'class':'form_control', 'placeholder':'Round number'}),
+            'current' : forms.CheckboxInput(attrs={'class':'form-check my-1','placeholder':'Current'}),
+        }

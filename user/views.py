@@ -6,6 +6,7 @@ from .models import Profile, Point, MinusPoint
 from .forms import EditProfile, AddPointForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
+from base.models import Match
 
 def logoutuser(request):
     logout(request)
@@ -47,14 +48,20 @@ def loginuser(request):
 
 def profiledetail(request, pro_id):
     profile = Profile.objects.get(user=request.user)
-    context = {'profile':profile}
+    match1 = Match.objects.all().filter(player_2=profile.user).count()
+    match2 = Match.objects.all().filter(player_1=profile.user).count()
+    totalmatches = match1 + match2
+    context = {'profile':profile, 'matches':totalmatches}
     return render(request, 'profile/profile.html', context)
 
+
+# For allusers page to see users detail
 def profileview(request, pr_id):
     profile = Profile.objects.get(id=pr_id)
-    points = Point.objects.all().filter(player=profile.user)
-    context = {'profile':profile, 'points':points}
+    context = {'profile':profile}
     return render(request, 'forstaff/profileview.html', context)
+
+
 """""
 def editprofile(request, pro_id):
     profile = Profile.objects.get(id=pro_id)
@@ -78,8 +85,8 @@ class UpdateProfile(LoginRequiredMixin,generic.UpdateView):
       return redirect ('profile', self.object.pk)
     
 def allusers(request):
-    allusers = User.objects.all()
-    context = {'allusers':allusers}
+    profiles = Profile.objects.all()
+    context = {'profiles':profiles}
     return render(request, 'forstaff/allusers.html',context)
 
 """"
@@ -97,3 +104,9 @@ def addpoint(request):
             form = AddPointForm()
         return render()
 """""
+
+def leadersboard(request):
+    allprofiles = Profile.objects.all().order_by('-points')
+    own = Profile.objects.get(user=request.user)
+    context = {'allprofiles':allprofiles, 'own':own}
+    return render(request, 'leadersboards.html',context)

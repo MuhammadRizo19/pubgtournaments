@@ -16,8 +16,8 @@
 {% else %}
 <p>Bio : <span class="text-danger">Not filled</span> </p>
 {% endif%}
-{% if profile.pubg_id%}
-Pubg id : 51217041371
+{% if profile.pubg_id %}
+Pubg id : {{profile.pubg_id}}
 {% else %}
 <p>Pubg id : <span class="text-danger">Not filled</span> </p>
 {% endif %}
@@ -25,21 +25,43 @@ Pubg id : 51217041371
 </div>
 </div>
 <hr>    
-<div class="d-flex justify-content-between align-items-center">
-    <div>
-        <h1>{{profile.points}} <span style="font-size: 20px;">points</span></h1>
-    </div>
-    <div>
-        <h1> 0 <span style="font-size: 20px;">wins</span></h1>
-    </div>
-    <div>
-        <h1> 0 <span style="font-size: 20px;">Trophy</span></h1>
-    </div>
-</div>
+<table class="table table-dark table-borderless">
+    <thead>
+        <tr>
+            <th>Points</th>
+            <th>Wins </th>
+            <th>Trophy</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h1> {{profile.points}}</h1></td>
+            <td><h1> 0 </h1></td>
+            <td><h1> 0 </h1></td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-dark table-borderless">
+    <thead>
+        <tr>
+            <th>Matches</th>
+            <th>Current Rank </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><h1> {{matches}}</h1></td>
+            <td><h1> 0 </h1></td>
+        </tr>
+    </tbody>
+</table>
+
 <div>
     <h3>Points history</h3>
     {% for point in points %}
-    {{point}}
+    <h5>{{point.player}</h5>}
     {% endfor %}
 </div>
 <div class="d-flex my-2">

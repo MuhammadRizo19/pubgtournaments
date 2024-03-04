@@ -5,7 +5,7 @@ from django.views import generic
 from datetime import date
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied 
-from .forms import EditTournamentForm,RequestForm,ApprovalRequestForm
+from .forms import EditTournamentForm,RequestForm,ApprovalRequestForm, RoundCreationForm
 from django.urls import reverse_lazy
 from user.models import Profile 
 
@@ -61,8 +61,23 @@ def tourdetail(request, tour_id):
     tour = Tournament.objects.get(id=tour_id)
     requests = Request.objects.all().filter(tournament=tour).order_by('-created')
     waiting = Request.objects.all().filter(tournament=tour,checked=False).count()
-    context = {'tour':tour, 'requests':requests,'waiting':waiting}
+    rounds = Round.objects.all().filter(tournament=tour)
+    context = {'tour':tour, 'requests':requests,'waiting':waiting, 'rounds':rounds}
     return render(request, 'forstaff/tourdetail.html', context)
+
+
+def createround(request, tour_id):
+    tour = Tournament.objects.get(id=tour_id)
+    form = RoundCreationForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            newform = form.save(commit=False)
+            newform.tournament = tour
+            newform.save()
+    
+    context = {'form':newform}
+    return render(request, 'forstaff/createround.html', context)
+
 
 class ApprovalRequest(LoginRequiredMixin,generic.UpdateView):
     model = Request
@@ -91,4 +106,11 @@ def roundpage(request, round_id):
 #    contextual_object_name = 'tour'
 
 #def fixtures(request):
-#    return render(request, 'tournament/fixtures.html')
+#    return render(request, 'tournament/fixtures.html')""
+
+
+def roundview(request, rnd_id):
+    forround = Round.objects.get(id=rnd_id)
+    matches = Match.objects.all().filter(forround=forround)
+    context = {'myround':forround, 'matches':matches}
+    return render(request, 'tournament/roundview.html', context)

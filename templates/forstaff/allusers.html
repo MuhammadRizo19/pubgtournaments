@@ -9,23 +9,23 @@
  <hr>
  <table class="table">
     <thead>
-        <tr class="bg-dark">
-            <th>#</th>
-            <th>Username</th>
-            <th>profile</th>
+        <tr>
+            <th class="bg-dark text-light">#</th>
+            <th class="bg-dark text-light">Username</th>
+            <th class="bg-dark text-light">profile</th>
         </tr>
     </thead>
     <tbody>
-        {% for us in allusers %}
+        {% for us in profiles %}
         <tr>
             <td>{{forloop.counter}}</td>
-            <td>{{us.username}}</td>
+            <td>{{us.user}}</td>
             <td> {% if us.profile.avatar %}
                 <img src="{{us.profile.avatar.url}}" width="30" class="rounded-circle" alt="">
-                 <a class="text-decoration-none" href="{% url 'profileview' us.profile.pk %}">{{us.profile}}</a>
+                 <a class="text-decoration-none" href="">{{us.user}}</a>
                 {% else %}
                 <img src="{% static 'default/default.jpg' %}" width="30" class="rounded-circle" alt="">
-                <a class="text-decoration-none" href="{% url 'profileview' us.profile.pk %}">{{us.profile}}</a>
+                <a class="text-decoration-none" href="">{{us.user}}</a>
                 {% endif %}
             </td>
 
